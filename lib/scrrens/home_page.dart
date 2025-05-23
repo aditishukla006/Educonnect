@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:eduwebsite/widgets/academic_cards.dart';
 import 'package:eduwebsite/widgets/aim_vision.dart';
 import 'package:eduwebsite/widgets/app_bar_widget.dart';
@@ -99,45 +101,148 @@ class _HomePageState extends State<HomePage> {
 }
 
 // Example Responsive Modal
-class BookVisitForm extends StatelessWidget {
+class BookVisitForm extends StatefulWidget {
   final VoidCallback onClose;
 
   const BookVisitForm({required this.onClose, super.key});
 
   @override
+  State<BookVisitForm> createState() => _BookVisitFormState();
+}
+
+class _BookVisitFormState extends State<BookVisitForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _schoolController = TextEditingController();
+  final _mobileController = TextEditingController();
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      final url = Uri.parse(
+        'https://mail.google.com/mail/u/0/?tab=rm&ogbl',
+      ); // Replace
+      final response = await launchUrl(
+        Uri.parse(
+          'mailto:YOUR_EMAIL?subject=New Visit&body=Name: ${_nameController.text}\nSchool: ${_schoolController.text}\nMobile: ${_mobileController.text}',
+        ),
+      );
+      widget.onClose();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 600;
+    final isMobile = MediaQuery.of(context).size.width < 800;
 
     return Material(
       color: Colors.transparent,
-      child: Container(
-        width: isMobile ? double.infinity : 400,
-        margin: const EdgeInsets.all(20),
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
+      child: Center(
+        child: Container(
+          width: isMobile ? double.infinity : 1000,
+          height: isMobile ? null : 500,
+          margin: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child:
+              isMobile
+                  ? _buildVerticalLayout(context)
+                  : _buildHorizontalLayout(context),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Book a Visit",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget _buildVerticalLayout(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _formSection(context),
+          const SizedBox(height: 20),
+          _imageSection(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHorizontalLayout(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: _formSection(context)),
+        const SizedBox(width: 20),
+        Expanded(child: _imageSection()),
+      ],
+    );
+  }
+
+  Widget _formSection(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Unlock your Academic\nGoals with us',
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 30),
+          TextFormField(
+            controller: _nameController,
+            decoration: const InputDecoration(
+              hintText: 'Enter Your Name',
+              border: OutlineInputBorder(),
             ),
-            const SizedBox(height: 20),
-            const TextField(decoration: InputDecoration(labelText: "Name")),
-            const SizedBox(height: 10),
-            const TextField(
-              decoration: InputDecoration(labelText: "Phone Number"),
+            validator:
+                (value) => value!.isEmpty ? 'Please enter your name' : null,
+          ),
+          const SizedBox(height: 15),
+          TextFormField(
+            controller: _schoolController,
+            decoration: const InputDecoration(
+              hintText: 'Enter Your School & Standard',
+              border: OutlineInputBorder(),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: onClose,
-              child: const Text("Submit & Close"),
+            validator:
+                (value) =>
+                    value!.isEmpty ? 'Please enter school and standard' : null,
+          ),
+          const SizedBox(height: 15),
+          TextFormField(
+            controller: _mobileController,
+            decoration: const InputDecoration(
+              hintText: 'Enter your Mobile Number',
+              border: OutlineInputBorder(),
             ),
-          ],
-        ),
+            validator:
+                (value) =>
+                    value!.isEmpty ? 'Please enter your mobile number' : null,
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton.icon(
+            onPressed: _submitForm,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            ),
+            icon: const Icon(Icons.send, color: Colors.white),
+            label: const Text(
+              'Send Your Message',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _imageSection() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Image.asset(
+        'assets/LOGO.jpg', // Make sure this is added
+        fit: BoxFit.cover,
       ),
     );
   }
