@@ -1,3 +1,7 @@
+import 'package:eduwebsite/scrrens/about_us.dart';
+import 'package:eduwebsite/scrrens/contact_screen.dart';
+import 'package:eduwebsite/scrrens/home_page.dart';
+import 'package:eduwebsite/scrrens/inquiry_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,6 +30,7 @@ class AppBarWidget extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.indigo.shade900,
       toolbarHeight: 90,
       titleSpacing: 0,
@@ -50,12 +55,12 @@ class AppBarWidget extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [_buildMenuButtons()],
+                        children: [_buildMenuButtons(context)],
                       ),
                     )
                     : Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [_buildMenuButtons()],
+                      children: [_buildMenuButtons(context)],
                     ),
           ),
 
@@ -104,18 +109,28 @@ class AppBarWidget extends StatelessWidget {
   }
 
   // Extract menu buttons to reuse in both scroll and non-scroll Rows
-  Widget _buildMenuButtons() {
+  Widget _buildMenuButtons(BuildContext context) {
     return Row(
       children: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const HomePage()),
+            );
+          },
           child: const Text(
             'Home',
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AboutUsPage()),
+            );
+          },
           child: const Text(
             'About',
             style: TextStyle(color: Colors.white, fontSize: 18),
@@ -143,7 +158,24 @@ class AppBarWidget extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => InquiryForm()),
+            );
+          },
+          child: const Text(
+            'Inquiry',
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => ContactUsPage()),
+            );
+          },
           child: const Text(
             'Contact',
             style: TextStyle(color: Colors.white, fontSize: 18),

@@ -5,6 +5,11 @@ class FeaturesSection extends StatelessWidget {
 
   final List<_Feature> features = const [
     _Feature(
+      icon: Icons.calendar_today,
+      title: 'Since 2010',
+      description: '15+ years of educational excellence.',
+    ),
+    _Feature(
       icon: Icons.school,
       title: 'Expert Teachers',
       description: 'Experienced & qualified faculty.',
@@ -24,20 +29,40 @@ class FeaturesSection extends StatelessWidget {
       title: 'Quality Education',
       description: 'Focused on overall growth.',
     ),
+    _Feature(
+      icon: Icons.emoji_events,
+      title: '100% Results',
+      description: 'Every year consistent success.',
+    ),
+    _Feature(
+      icon: Icons.female,
+      title: 'Special Girls Batch',
+      description: 'Dedicated & supportive environment.',
+    ),
+
+    _Feature(
+      icon: Icons.group,
+      title: 'Smaller Batches',
+      description: 'Better focus, better learning.',
+    ),
+    _Feature(
+      icon: Icons.person_pin_circle,
+      title: 'Personalized Attention',
+      description: 'We care for every student.',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    // Adjust card width based on screen size to be more responsive
     double cardWidth;
     if (screenWidth < 400) {
-      cardWidth = screenWidth * 0.8; // almost full width on small screens
+      cardWidth = screenWidth * 0.8;
     } else if (screenWidth < 700) {
       cardWidth = 200;
     } else {
-      cardWidth = 220; // slightly wider cards on large screens
+      cardWidth = 220;
     }
 
     return Container(
@@ -59,37 +84,31 @@ class FeaturesSection extends StatelessWidget {
             runSpacing: 30,
             alignment: WrapAlignment.center,
             children:
-                features
-                    .map(
-                      (f) => SizedBox(
-                        width: cardWidth,
-                        child: Column(
-                          children: [
-                            Icon(
-                              f.icon,
-                              size: 50,
-                              color: Colors.orange.shade700,
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              f.title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              f.description,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ],
+                features.map((f) {
+                  return SizedBox(
+                    width: cardWidth,
+                    child: Column(
+                      children: [
+                        Icon(f.icon, size: 50, color: Colors.orange.shade700),
+                        const SizedBox(height: 10),
+                        Text(
+                          f.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                    )
-                    .toList(),
+                        const SizedBox(height: 8),
+                        Text(
+                          f.description,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
           ),
         ],
       ),

@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
         icon: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white),
         label: const Text(
           'How can I help you?',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
     );
