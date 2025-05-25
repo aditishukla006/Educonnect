@@ -1,5 +1,6 @@
 import 'package:eduwebsite/scrrens/about_us.dart';
 import 'package:eduwebsite/scrrens/contact_screen.dart';
+import 'package:eduwebsite/scrrens/gallary_screen.dart';
 import 'package:eduwebsite/scrrens/home_page.dart';
 import 'package:eduwebsite/scrrens/inquiry_screen.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +90,12 @@ class AppBarWidget extends StatelessWidget {
           ),
 
           TextButton(
-            onPressed: onBookVisitTap,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => InquiryForm()),
+              );
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               decoration: BoxDecoration(
@@ -144,7 +150,12 @@ class AppBarWidget extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => GalleryPage()),
+            );
+          },
           child: const Text(
             'Gallery',
             style: TextStyle(color: Colors.white, fontSize: 18),
