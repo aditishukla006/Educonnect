@@ -134,7 +134,7 @@ class Footer extends StatelessWidget {
                   Icon(Icons.email, color: Colors.white70, size: 18),
                   SizedBox(width: 8),
                   Text(
-                    'shuklaaditi02004@gmail.com',
+                    'dbmehta.30@gmail.com',
                     style: TextStyle(color: Colors.white70),
                   ),
                 ],
