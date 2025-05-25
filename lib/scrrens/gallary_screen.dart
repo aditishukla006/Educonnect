@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../base_layout.dart';
 
 class GalleryPage extends StatefulWidget {
@@ -23,23 +24,37 @@ class _GalleryPageState extends State<GalleryPage> {
     'assets/activity4.jpeg',
     'assets/activity5.jpeg',
     'assets/activity6.jpeg',
+    'assets/activity7.jpeg',
+    'assets/activity8.jpeg',
+    'assets/activity9.jpeg',
+    'assets/activity10.jpeg',
   ];
 
-  int currentResultSet = 0; // 0 for first 3, 1 for next 3
+  final List<String> academicImages = [
+    'assets/activity5.jpeg',
+    'assets/activity8.jpeg',
+    'assets/activity9.jpeg',
+    'assets/activity1.jpeg',
+    'assets/activity2.jpeg',
+    'assets/activity3.jpeg',
+  ];
+
+  int currentResultSet = 0;
   int currentActivitySet = 0;
+  int currentAcademicSet = 0;
 
   List<bool> _resultVisible = [false, false, false];
   List<bool> _activityVisible = [false, false, false];
+  List<bool> _academicVisible = [false, false, false];
 
   @override
   void initState() {
     super.initState();
 
-    // Animate both sections
     _animateImages(_resultVisible);
     _animateImages(_activityVisible, delay: 1500);
+    _animateImages(_academicVisible, delay: 3000);
 
-    // Auto-switch both sets after 5 seconds
     Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
         setState(() {
@@ -59,6 +74,16 @@ class _GalleryPageState extends State<GalleryPage> {
         _animateImages(_activityVisible);
       }
     });
+
+    Future.delayed(const Duration(seconds: 11), () {
+      if (mounted) {
+        setState(() {
+          currentAcademicSet = 1;
+          _academicVisible = [false, false, false];
+        });
+        _animateImages(_academicVisible);
+      }
+    });
   }
 
   void _animateImages(List<bool> visibleList, {int delay = 0}) {
@@ -73,10 +98,68 @@ class _GalleryPageState extends State<GalleryPage> {
     }
   }
 
+  Widget _buildContactCard(BuildContext context) {
+    return Card(
+      color: Colors.indigo.shade50,
+      elevation: 6,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 24),
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Take the first step toward a brighter future by booking a visit with us. Discover our teaching approach, meet our expert faculty, and see how we can help you achieve your academic goals.',
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                height: 1.5,
+                color: Colors.indigo.shade700,
+              ),
+            ),
+            const SizedBox(height: 30),
+            Align(
+              alignment: Alignment.centerRight,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.indigo,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 14,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 8,
+                  shadowColor: Colors.indigoAccent,
+                ),
+                onPressed: () {
+                  // TODO: add booking logic here
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Booking your visit...')),
+                  );
+                },
+                child: Text(
+                  'Book Visit',
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    letterSpacing: 0.9,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildImageGrid(List<String> images, List<bool> visibleFlags) {
     return Wrap(
-      spacing: 16,
-      runSpacing: 16,
+      spacing: 24,
+      runSpacing: 24,
       alignment: WrapAlignment.center,
       children: List.generate(images.length, (index) {
         final imgPath = images[index];
@@ -114,22 +197,22 @@ class _GalleryPageState extends State<GalleryPage> {
               );
             },
             child: Container(
-              width: 160,
-              height: 160,
+              width: 300,
+              height: 300,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black12,
-                    blurRadius: 8,
+                    blurRadius: 12,
                     spreadRadius: 2,
-                    offset: const Offset(0, 4),
+                    offset: const Offset(0, 6),
                   ),
                 ],
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
                 child: Image.asset(imgPath, fit: BoxFit.cover),
               ),
             ),
@@ -141,28 +224,33 @@ class _GalleryPageState extends State<GalleryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> visibleResultImages = resultImages.sublist(
+    final visibleResultImages = resultImages.sublist(
       currentResultSet * 3,
       (currentResultSet + 1) * 3,
     );
 
-    final List<String> visibleActivityImages = activityImages.sublist(
+    final visibleActivityImages = activityImages.sublist(
       currentActivitySet * 3,
       (currentActivitySet + 1) * 3,
+    );
+
+    final visibleAcademicImages = academicImages.sublist(
+      currentAcademicSet * 3,
+      (currentAcademicSet + 1) * 3,
     );
 
     return BaseLayout(
       child: SingleChildScrollView(
         child: Container(
           color: const Color(0xFFF8F6F4),
-          padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
                 'Results and Achievements',
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 34,
                   fontWeight: FontWeight.bold,
                   color: Colors.indigo,
                 ),
@@ -176,14 +264,30 @@ class _GalleryPageState extends State<GalleryPage> {
               const Text(
                 'Student Activities',
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 34,
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
+                  color: Colors.indigo,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
               _buildImageGrid(visibleActivityImages, _activityVisible),
+
+              const SizedBox(height: 64),
+
+              const Text(
+                'Academic Activities',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.indigo,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
+              _buildImageGrid(visibleAcademicImages, _academicVisible),
+              const SizedBox(height: 32),
+              _buildContactCard(context),
             ],
           ),
         ),

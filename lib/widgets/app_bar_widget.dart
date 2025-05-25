@@ -3,6 +3,7 @@ import 'package:eduwebsite/scrrens/contact_screen.dart';
 import 'package:eduwebsite/scrrens/gallary_screen.dart';
 import 'package:eduwebsite/scrrens/home_page.dart';
 import 'package:eduwebsite/scrrens/inquiry_screen.dart';
+import 'package:eduwebsite/scrrens/team_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -162,7 +163,12 @@ class AppBarWidget extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => TeamPage()),
+            );
+          },
           child: const Text(
             'Team',
             style: TextStyle(color: Colors.white, fontSize: 18),

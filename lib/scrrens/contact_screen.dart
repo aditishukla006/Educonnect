@@ -1,4 +1,3 @@
-// Unchanged imports
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -93,6 +92,8 @@ class ContactUsPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(width: 50),
+                _buildContactCard(context),
               ],
             ),
           ),
@@ -100,6 +101,63 @@ class ContactUsPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildContactCard(BuildContext context) {
+  return Card(
+    color: Colors.indigo.shade50,
+    elevation: 6,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 24),
+    child: Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Take the first step toward a brighter future by booking a visit with us. Discover our teaching approach, meet our expert faculty, and see how we can help you achieve your academic goals.',
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              height: 1.5,
+              color: Colors.indigo.shade700,
+            ),
+          ),
+          const SizedBox(height: 30),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 14,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 8,
+                shadowColor: Colors.indigoAccent,
+              ),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Booking your visit...')),
+                );
+              },
+              child: Text(
+                'Book Visit',
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  letterSpacing: 0.9,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 class _InfoTile extends StatelessWidget {
@@ -211,7 +269,7 @@ class _ContactFormState extends State<_ContactForm> {
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to send message. Try again.')),
+            const SnackBar(content: Text('Failed to send message. Try again.')),
           );
         }
       } catch (e) {
@@ -280,6 +338,8 @@ class _ContactFormState extends State<_ContactForm> {
             validator: (val) => val == null || val.isEmpty ? 'Required' : null,
             maxLines: 8,
           ),
+
+          // Add the contact card here inside the form if you want to show it here
           const SizedBox(height: 24),
           Align(
             alignment: Alignment.centerRight,
