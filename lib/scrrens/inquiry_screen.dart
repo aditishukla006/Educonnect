@@ -25,18 +25,23 @@ class _InquiryFormState extends State<InquiryForm> {
   bool isEnglish = false;
 
   final standards = [
-    '1st',
-    '2nd',
-    '3rd',
-    '4th',
-    '5th',
-    '6th',
-    '7th',
-    '8th',
-    '9th',
-    '10th',
-    '11th',
-    '12th',
+    'Playgroup, Nursery, Jr.KG, Sr.KG',
+
+    'Standard 1 to 10 & 11-12 (Com./Sci.)',
+
+    'ABACUS (Whole Brain Development Program)',
+
+    'Degree / Diploma Engineering ',
+
+    'Engineering Projects',
+
+    'Spoken English (With Certification)',
+
+    ' IELTS Coaching',
+
+    ' Computer Training (With Certification)',
+
+    'AutoCAD, PCB Designing Courses (With Certification)',
   ];
 
   Future<void> sendEmail() async {
@@ -147,7 +152,7 @@ class _InquiryFormState extends State<InquiryForm> {
       children: [
         const Text.rich(
           TextSpan(
-            text: "Select Your Standard",
+            text: "Select Your course",
             style: TextStyle(fontSize: 16, color: Colors.black),
             children: [
               TextSpan(text: ' *', style: TextStyle(color: Colors.red)),
@@ -157,7 +162,7 @@ class _InquiryFormState extends State<InquiryForm> {
         const SizedBox(height: 6),
         DropdownButtonFormField<String>(
           value: selectedStandard.isEmpty ? null : selectedStandard,
-          hint: const Text("Select Std Here"),
+          hint: const Text("Select course Here"),
           items:
               standards
                   .map((std) => DropdownMenuItem(value: std, child: Text(std)))
@@ -165,7 +170,7 @@ class _InquiryFormState extends State<InquiryForm> {
           onChanged: (val) => setState(() => selectedStandard = val!),
           validator:
               (val) =>
-                  val == null || val.isEmpty ? 'Please select standard' : null,
+                  val == null || val.isEmpty ? 'Please select course' : null,
           decoration: InputDecoration(
             filled: true,
             fillColor: const Color(0xFFF5F7FA),

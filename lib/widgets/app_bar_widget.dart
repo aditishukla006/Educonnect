@@ -1,3 +1,7 @@
+import 'package:eduwebsite/scrrens/faq.dart';
+import 'package:eduwebsite/scrrens/history.dart';
+import 'package:eduwebsite/scrrens/teamdetailabacus.dart';
+import 'package:eduwebsite/scrrens/whatisabacus.dart';
 import 'package:flutter/material.dart';
 import 'package:eduwebsite/scrrens/about_us.dart';
 import 'package:eduwebsite/scrrens/contact_screen.dart';
@@ -23,6 +27,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   OverlayEntry? _abacusOverlay;
   bool _isHoveringCourses = false;
   bool _isHoveringAbacus = false;
+  bool _isInAbacusSubmenu = false;
 
   void _showDropdown(BuildContext context) {
     _dropdownOverlay = OverlayEntry(
@@ -34,7 +39,14 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             showWhenUnlinked: false,
             offset: const Offset(0, 45),
             child: MouseRegion(
-              onExit: (_) => _removeDropdown(),
+              onExit: (_) {
+                Future.delayed(const Duration(milliseconds: 300), () {
+                  if (!_isHoveringAbacus && !_isInAbacusSubmenu) {
+                    _removeDropdown();
+                  }
+                });
+              },
+
               child: Material(
                 elevation: 5,
                 color: Colors.white,
@@ -109,7 +121,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       onExit: (_) {
         setState(() => _isHoveringAbacus = false);
         Future.delayed(const Duration(milliseconds: 300), () {
-          if (!_isHoveringAbacus) _removeAbacusDropdown();
+          if (!_isHoveringAbacus && !_isInAbacusSubmenu)
+            _removeAbacusDropdown();
         });
       },
       child: Container(
@@ -141,11 +154,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           left: position.dx + 330,
           top: position.dy + 95,
           child: MouseRegion(
-            onEnter: (_) => setState(() => _isHoveringAbacus = true),
+            onEnter: (_) => setState(() => _isInAbacusSubmenu = true),
             onExit: (_) {
-              setState(() => _isHoveringAbacus = false);
+              setState(() => _isInAbacusSubmenu = false);
               Future.delayed(const Duration(milliseconds: 300), () {
-                if (!_isHoveringAbacus) _removeAbacusDropdown();
+                if (!_isHoveringAbacus && !_isInAbacusSubmenu)
+                  _removeAbacusDropdown();
               });
             },
             child: Material(
@@ -171,11 +185,39 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   Widget _submenuItem(String label) {
     return InkWell(
       onTap: () {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Selected: $label')));
-        _removeDropdown();
-        _removeAbacusDropdown();
+        _removeDropdown(); // ✅ Close everything before navigating
+
+        // ✅ Navigate to the right page
+        switch (label) {
+          case 'What is ABACUS':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => WhatIsAbacusPage()),
+            );
+            break;
+          case 'History of ABACUS':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => HistoryOfAbacusPage()),
+            );
+            break;
+          case 'Team Details':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => Teamdetail()),
+            );
+            break;
+          case 'FAQ':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => FAQPage()),
+            );
+            break;
+          default:
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Selected: $label')));
+        }
       },
       hoverColor: Colors.grey.shade300,
       child: Padding(
@@ -238,14 +280,20 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           CompositedTransformTarget(
             link: _layerLink,
             child: MouseRegion(
-              key: _dropdownKey,
               onEnter: (_) {
                 if (_dropdownOverlay == null) {
                   setState(() => _isHoveringCourses = true);
                   _showDropdown(context);
                 }
               },
-              child: Padding(
+              onExit: (_) {
+                Future.delayed(const Duration(milliseconds: 300), () {
+                  if (!_isHoveringAbacus && !_isInAbacusSubmenu)
+                    _removeDropdown();
+                });
+              },
+              child: Container(
+                key: _dropdownKey, // <<== Correctly place it here
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   'Courses',
@@ -259,6 +307,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               ),
             ),
           ),
+
           _navButton(context, 'Gallery', GalleryPage()),
           _navButton(context, 'Team', TeamPage()),
           _navButton(context, 'Inquiry', InquiryForm()),
