@@ -24,7 +24,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
     _dropdownOverlay = OverlayEntry(
       builder: (context) {
         return Positioned(
-          width: 160,
+          width: 320, // Adjusted width for better readability
           child: CompositedTransformFollower(
             link: _layerLink,
             showWhenUnlinked: false,
@@ -34,43 +34,47 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               child: Material(
                 elevation: 5,
                 color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (var course in [
-                      '6th',
-                      '7th',
-                      '8th',
-                      '9th',
-                      '10th',
-                      '11th Com.',
-                      '11th Sci.',
-                      '12th Com.',
-                      '12th Sci.',
-                    ])
-                      InkWell(
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Selected: $course')),
-                          );
-                          _removeDropdown();
-                        },
-                        hoverColor: Colors.grey.shade200,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 10,
-                          ),
-                          child: Text(
-                            course,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
+                child: SizedBox(
+                  height: 200, // Max height for dropdown, enables scrolling
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (var course in [
+                          'Playgroup, Nursery, Jr.KG, Sr.KG',
+                          'Standard 1 to 10 & 11-12 (Com./Sci.) ABACUS (Whole Brain Development Program)',
+                          'Degree / Diploma Engineering',
+                          'Engineering Projects',
+                          'Spoken English (With Certification)',
+                          'IELTS Coaching',
+                          'Computer Training (With Certification)',
+                          'AutoCAD, PCB Designing Courses (With Certification)',
+                        ])
+                          InkWell(
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Selected: $course')),
+                              );
+                              _removeDropdown();
+                            },
+                            hoverColor: Colors.grey.shade200,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 10,
+                              ),
+                              child: Text(
+                                course,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -154,11 +158,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           _navButton(context, 'Team', TeamPage()),
           _navButton(context, 'Inquiry', InquiryForm()),
           _navButton(context, 'Contact', ContactUsPage()),
-
-          IconButton(
-            tooltip: 'Call Us',
-            onPressed: () => _callNumber('+918866114453'),
-            icon: const Icon(Icons.call, color: Colors.white, size: 25),
+          const Spacer(),
+          Row(
+            children: [
+              IconButton(
+                tooltip: 'Call Us',
+                onPressed: () => _callNumber('+918866114453'),
+                icon: const Icon(Icons.call, color: Colors.white, size: 25),
+              ),
+            ],
           ),
           IconButton(
             tooltip: 'Facebook',
