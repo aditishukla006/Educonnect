@@ -178,64 +178,6 @@ class AboutUsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildContactCard(BuildContext context) {
-    return Card(
-      color: Colors.indigo.shade50,
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Take the first step toward a brighter future by booking a visit with us. Discover our teaching approach, meet our expert faculty, and see how we can help you achieve your academic goals.',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                height: 1.5,
-                color: Colors.indigo.shade700,
-              ),
-            ),
-            const SizedBox(height: 30),
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 14,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 8,
-                  shadowColor: Colors.indigoAccent,
-                ),
-                onPressed: () {
-                  // TODO: add booking logic here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Booking your visit...')),
-                  );
-                },
-                child: Text(
-                  'Book Visit',
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    letterSpacing: 0.9,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
@@ -305,7 +247,6 @@ class AboutUsPage extends StatelessWidget {
                   'assets/class3.jpeg',
                 ),
 
-                _buildContactCard(context),
                 const SizedBox(height: 40),
               ],
             ),

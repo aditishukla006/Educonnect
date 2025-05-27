@@ -20,9 +20,9 @@ class FeaturesSection extends StatelessWidget {
       description: 'Technology integrated learning.',
     ),
     _Feature(
-      icon: Icons.access_time,
-      title: 'Flexible Timings',
-      description: 'Convenient class schedules.',
+      icon: Icons.assignment,
+      title: 'Weekly Assessment',
+      description: 'Stay on track with regular tests.',
     ),
     _Feature(
       icon: Icons.thumb_up,

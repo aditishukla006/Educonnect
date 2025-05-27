@@ -1,6 +1,6 @@
-import 'package:eduwebsite/base_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:eduwebsite/base_layout.dart';
 
 class TeamPage extends StatelessWidget {
   const TeamPage({super.key});
@@ -32,33 +32,37 @@ class TeamPage extends StatelessWidget {
             Expanded(
               child: _TeamCard(
                 name: 'Dharmik Mehta',
-                designation: 'Senior Abacus Instructor',
+                designation: 'Managing Director',
                 description:
-                    'Dharmik Mehta has over 12 years of experience teaching abacus to students across various age groups. He specializes in visual memory training and speed calculation, helping students enhance their concentration and arithmetic skills.',
-                experience: '12 Years',
-                experienceAt: 'Navkar Education Institute',
-                email: 'dharmik.navkar@gmail.com',
-                mobile: '+91 98765 43210',
+                    'Dharmik Mehta is the Managing Director at Navkar Education and a Maths expert with over 15 years of experience. With a strong background in Mathematics, Physics, English Grammar, and Engineering coaching, he is dedicated to helping students excel in academics and engineering projects.',
+                experience: '15+ Years',
+                AreaofInterest:
+                    'Mathematics, Physics, English Grammar, Engineering Projects, Engineering Coaching',
+                email: 'dbmehta.30@gmail.com',
+                mobile: '+91-8866114453',
                 imagePath: 'assets/images/dharmik.png',
+                education: 'B.Tech & M.Tech',
               ),
             ),
             const SizedBox(width: 24),
             Expanded(
               child: _TeamCard(
                 name: 'Pooja Mehta',
-                designation: 'Academic Coordinator',
+                designation: 'Academic Head & Career Counsellor',
                 description:
-                    'Pooja Mehta coordinates all academic activities at Navkar. With a background in education management, she ensures smooth communication between instructors and parents, helping maintain quality standards in all our programs.',
-                experience: '8 Years',
-                experienceAt: 'Navkar Education Institute',
-                email: 'pooja.navkar@gmail.com',
-                mobile: '+91 91234 56789',
+                    'Pooja Mehta is the Centre Director for the ABACUS Whole Brain Development Program and serves as the Academic Head and Career Counsellor at Navkar Education. With over 10 years of experience, she specializes in ABACUS training along with subjects like History, Economics, English, Environment, Law, and Humanities.',
+                experience: '10+ Years',
+                AreaofInterest:
+                    'ABACUS (Whole Brain Development Program), History, Economics, English, Environment, Law, Humanities & Social Science ',
+                email: 'pooja.mehta3001@gmail.com',
+                mobile: '+91-8160549426',
                 imagePath: 'assets/images/pooja.png',
+                education: 'B.Com, CS',
               ),
             ),
           ],
         ),
-        _buildContactCard(context), // Added contact card here
+        const SizedBox(height: 40),
       ],
     );
   }
@@ -68,86 +72,33 @@ class TeamPage extends StatelessWidget {
       children: [
         _TeamCard(
           name: 'Dharmik Mehta',
-          designation: 'Senior Abacus Instructor',
+          designation: 'Managing Director',
           description:
-              'Dharmik Mehta has over 12 years of experience teaching abacus to students across various age groups. He specializes in visual memory training and speed calculation, helping students enhance their concentration and arithmetic skills.',
-          experience: '12 Years',
-          experienceAt: 'Navkar Education Institute',
-          email: 'dharmik.navkar@gmail.com',
-          mobile: '+91 98765 43210',
+              'Dharmik Mehta is the Managing Director at Navkar Education and a Maths expert with over 15 years of experience. With a strong background in Mathematics, Physics, English Grammar, and Engineering coaching, he is dedicated to helping students excel in academics and engineering projects.',
+          experience: '15+ Years',
+          AreaofInterest:
+              'Mathematics, Physics, English Grammar, Engineering Projects, Engineering Coaching',
+          email: 'dbmehta.30@gmail.com',
+          mobile: '+91-8866114453',
           imagePath: 'assets/images/dharmik.png',
+          education: 'B.Tech & M.Tech',
         ),
         const SizedBox(height: 24),
         _TeamCard(
           name: 'Pooja Mehta',
-          designation: 'Academic Coordinator',
+          designation: 'Academic Head & Career Counsellor',
           description:
-              'Pooja Mehta coordinates all academic activities at Navkar. With a background in education management, she ensures smooth communication between instructors and parents, helping maintain quality standards in all our programs.',
-          experience: '8 Years',
-          experienceAt: 'Navkar Education Institute',
-          email: 'pooja.navkar@gmail.com',
-          mobile: '+91 91234 56789',
+              'Pooja Mehta is the Centre Director for the ABACUS Whole Brain Development Program and serves as the Academic Head and Career Counsellor at Navkar Education. With over 10 years of experience, she specializes in ABACUS training along with subjects like History, Economics, English, Environment, Law, and Humanities.',
+          experience: '10+ Years',
+          AreaofInterest:
+              'ABACUS (Whole Brain Development Program), History, Economics, English, Environment, Law, Humanities & Social Science ',
+          email: 'pooja.mehta3001@gmail.com',
+          mobile: '+91-8160549426',
           imagePath: 'assets/images/pooja.png',
+          education: 'B.Com, CS',
         ),
-        _buildContactCard(context), // Added contact card here
+        const SizedBox(height: 40),
       ],
-    );
-  }
-
-  Widget _buildContactCard(BuildContext context) {
-    return Card(
-      color: Colors.indigo.shade50,
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Take the first step toward a brighter future by booking a visit with us. Discover our teaching approach, meet our expert faculty, and see how we can help you achieve your academic goals.',
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                height: 1.5,
-                color: Colors.indigo.shade700,
-              ),
-            ),
-            const SizedBox(height: 30),
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.indigo,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 14,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 8,
-                  shadowColor: Colors.indigoAccent,
-                ),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Booking your visit...')),
-                  );
-                },
-                child: Text(
-                  'Book Visit',
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    letterSpacing: 0.9,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -157,7 +108,9 @@ class _TeamCard extends StatelessWidget {
   final String designation;
   final String description;
   final String experience;
-  final String experienceAt;
+  final String AreaofInterest;
+  final String education;
+
   final String email;
   final String mobile;
   final String imagePath;
@@ -167,16 +120,18 @@ class _TeamCard extends StatelessWidget {
     required this.designation,
     required this.description,
     required this.experience,
-    required this.experienceAt,
+    required this.AreaofInterest,
     required this.email,
     required this.mobile,
     required this.imagePath,
+    required this.education,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
+      margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
         color: Colors.indigo.shade50,
         borderRadius: BorderRadius.circular(40),
@@ -188,68 +143,42 @@ class _TeamCard extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             name,
-            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            style: GoogleFonts.poppins(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             designation,
-            style: const TextStyle(fontSize: 18, color: Colors.purple),
+            style: GoogleFonts.poppins(fontSize: 18, color: Colors.purple),
           ),
           const SizedBox(height: 16),
-          Text(description, style: const TextStyle(fontSize: 16)),
+          Text(description, style: GoogleFonts.poppins(fontSize: 16)),
           const SizedBox(height: 16),
-          Text.rich(
-            TextSpan(
-              children: [
-                const TextSpan(
-                  text: 'Experience: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                TextSpan(text: experience),
-              ],
-            ),
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-          Text.rich(
-            TextSpan(
-              children: [
-                const TextSpan(
-                  text: 'Experience At: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                TextSpan(text: experienceAt),
-              ],
-            ),
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-          Text.rich(
-            TextSpan(
-              children: [
-                const TextSpan(
-                  text: 'Email: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                TextSpan(text: email),
-              ],
-            ),
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-          Text.rich(
-            TextSpan(
-              children: [
-                const TextSpan(
-                  text: 'Mobile: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                TextSpan(text: mobile),
-              ],
-            ),
-            style: const TextStyle(fontSize: 16),
-          ),
+          _buildInfoRow('Experience:', experience),
+          _buildInfoRow('Experience At:', AreaofInterest),
+          _buildInfoRow('Email:', email),
+          _buildInfoRow('Mobile:', mobile),
         ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: RichText(
+        text: TextSpan(
+          style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+          children: [
+            TextSpan(
+              text: '$label ',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            TextSpan(text: value),
+          ],
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:eduwebsite/widgets/booking_button.dart';
 import 'package:flutter/material.dart';
 import 'package:eduwebsite/widgets/app_bar_widget.dart';
 import 'package:eduwebsite/widgets/footer.dart';
@@ -28,7 +29,12 @@ class BaseLayout extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
         child: Column(
-          children: [child, const SizedBox(height: 40), const Footer()],
+          children: [
+            child,
+            const ContactCard(), // <-- Reusable component added here
+            const SizedBox(height: 40),
+            const Footer(),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(

@@ -1,17 +1,94 @@
+import 'package:flutter/material.dart';
 import 'package:eduwebsite/scrrens/about_us.dart';
 import 'package:eduwebsite/scrrens/contact_screen.dart';
 import 'package:eduwebsite/scrrens/gallary_screen.dart';
 import 'package:eduwebsite/scrrens/home_page.dart';
 import 'package:eduwebsite/scrrens/inquiry_screen.dart';
 import 'package:eduwebsite/scrrens/team_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AppBarWidget extends StatelessWidget {
+class AppBarWidget extends StatefulWidget {
   final VoidCallback onBookVisitTap;
   const AppBarWidget({required this.onBookVisitTap, super.key});
-  Size get preferredSize => const Size.fromHeight(90);
+  @override
+  State<AppBarWidget> createState() => _AppBarWidgetState();
+}
+
+class _AppBarWidgetState extends State<AppBarWidget> {
+  final LayerLink _layerLink = LayerLink();
+  OverlayEntry? _dropdownOverlay;
+  bool _isHoveringCourses = false;
+
+  void _showDropdown(BuildContext context) {
+    _dropdownOverlay = OverlayEntry(
+      builder: (context) {
+        return Positioned(
+          width: 160,
+          child: CompositedTransformFollower(
+            link: _layerLink,
+            showWhenUnlinked: false,
+            offset: const Offset(0, 45), // position under the Courses button
+            child: MouseRegion(
+              onExit: (_) => _removeDropdown(),
+              child: Material(
+                elevation: 5,
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var course in [
+                      '6th',
+                      '7th',
+                      '8th',
+                      '9th',
+                      '10th',
+                      '11th Com.',
+                      '11th Sci.',
+                      '12th Com.',
+                      '12th Sci.',
+                    ])
+                      InkWell(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Selected: $course')),
+                          );
+                          _removeDropdown();
+                        },
+                        hoverColor: Colors.grey.shade200,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
+                          child: Text(
+                            course,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    Overlay.of(context).insert(_dropdownOverlay!);
+  }
+
+  void _removeDropdown() {
+    _dropdownOverlay?.remove();
+    _dropdownOverlay = null;
+    setState(() {
+      _isHoveringCourses = false;
+    });
+  }
 
   void _callNumber(String number) async {
     final Uri callUri = Uri.parse('tel:$number');
@@ -29,8 +106,6 @@ class AppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.indigo.shade900,
@@ -46,25 +121,39 @@ class AppBarWidget extends StatelessWidget {
               child: Image.asset('assets/LOGO.jpg', fit: BoxFit.contain),
             ),
           ),
-
           const SizedBox(width: 20),
 
-          // Responsive menu: horizontal scroll on narrow widths
-          Expanded(
-            child:
-                screenWidth < 900
-                    ? SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [_buildMenuButtons(context)],
-                      ),
-                    )
-                    : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [_buildMenuButtons(context)],
-                    ),
+          _navButton(context, 'Home', const HomePage()),
+          _navButton(context, 'About', const AboutUsPage()),
+
+          CompositedTransformTarget(
+            link: _layerLink,
+            child: MouseRegion(
+              onEnter: (_) {
+                if (_dropdownOverlay == null) {
+                  setState(() => _isHoveringCourses = true);
+                  _showDropdown(context);
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Courses',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    decoration:
+                        _isHoveringCourses ? TextDecoration.underline : null,
+                  ),
+                ),
+              ),
+            ),
           ),
+
+          _navButton(context, 'Gallery', GalleryPage()),
+          _navButton(context, 'Team', TeamPage()),
+          _navButton(context, 'Inquiry', InquiryForm()),
+          _navButton(context, 'Contact', ContactUsPage()),
 
           IconButton(
             tooltip: 'Call Us',
@@ -90,13 +179,13 @@ class AppBarWidget extends StatelessWidget {
             ),
           ),
 
+          const SizedBox(width: 10),
           TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => InquiryForm()),
-              );
-            },
+            onPressed:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => InquiryForm()),
+                ),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               decoration: BoxDecoration(
@@ -115,90 +204,15 @@ class AppBarWidget extends StatelessWidget {
     );
   }
 
-  // Extract menu buttons to reuse in both scroll and non-scroll Rows
-  Widget _buildMenuButtons(BuildContext context) {
-    return Row(
-      children: [
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const HomePage()),
-            );
-          },
-          child: const Text(
-            'Home',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const AboutUsPage()),
-            );
-          },
-          child: const Text(
-            'About',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        TextButton(
-          onPressed: () {},
-          child: const Text(
-            'Course',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => GalleryPage()),
-            );
-          },
-          child: const Text(
-            'Gallery',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => TeamPage()),
-            );
-          },
-          child: const Text(
-            'Team',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => InquiryForm()),
-            );
-          },
-          child: const Text(
-            'Inquiry',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => ContactUsPage()),
-            );
-          },
-          child: const Text(
-            'Contact',
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-        ),
-      ],
+  Widget _navButton(BuildContext context, String label, Widget page) {
+    return TextButton(
+      onPressed:
+          () =>
+              Navigator.push(context, MaterialPageRoute(builder: (_) => page)),
+      child: Text(
+        label,
+        style: const TextStyle(color: Colors.white, fontSize: 18),
+      ),
     );
   }
 }
