@@ -11,67 +11,63 @@ import 'package:url_launcher/url_launcher.dart';
 class AppBarWidget extends StatefulWidget {
   final VoidCallback onBookVisitTap;
   const AppBarWidget({required this.onBookVisitTap, super.key});
+
   @override
   State<AppBarWidget> createState() => _AppBarWidgetState();
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {
   final LayerLink _layerLink = LayerLink();
+  final GlobalKey _dropdownKey = GlobalKey();
   OverlayEntry? _dropdownOverlay;
+  OverlayEntry? _abacusOverlay;
   bool _isHoveringCourses = false;
+  bool _isHoveringAbacus = false;
 
   void _showDropdown(BuildContext context) {
     _dropdownOverlay = OverlayEntry(
       builder: (context) {
         return Positioned(
-          width: 320, // Adjusted width for better readability
+          width: 350,
           child: CompositedTransformFollower(
             link: _layerLink,
             showWhenUnlinked: false,
-            offset: const Offset(0, 45), // position under the Courses button
+            offset: const Offset(0, 45),
             child: MouseRegion(
               onExit: (_) => _removeDropdown(),
               child: Material(
                 elevation: 5,
                 color: Colors.white,
                 child: SizedBox(
-                  height: 200, // Max height for dropdown, enables scrolling
+                  height: 250,
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (var course in [
+                        _dropdownItem(
+                          context,
                           'Playgroup, Nursery, Jr.KG, Sr.KG',
-                          'Standard 1 to 10 & 11-12 (Com./Sci.) ABACUS (Whole Brain Development Program)',
-                          'Degree / Diploma Engineering',
-                          'Engineering Projects',
+                        ),
+                        _dropdownItem(
+                          context,
+                          'Standard 1 to 10 & 11-12 (Com./Sci.)',
+                        ),
+                        _abacusDropdownItem(),
+                        _dropdownItem(context, 'Degree / Diploma Engineering'),
+                        _dropdownItem(context, 'Engineering Projects'),
+                        _dropdownItem(
+                          context,
                           'Spoken English (With Certification)',
-                          'IELTS Coaching',
+                        ),
+                        _dropdownItem(context, 'IELTS Coaching'),
+                        _dropdownItem(
+                          context,
                           'Computer Training (With Certification)',
+                        ),
+                        _dropdownItem(
+                          context,
                           'AutoCAD, PCB Designing Courses (With Certification)',
-                        ])
-                          InkWell(
-                            onTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Selected: $course')),
-                              );
-                              _removeDropdown();
-                            },
-                            hoverColor: Colors.grey.shade200,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 10,
-                              ),
-                              child: Text(
-                                course,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -82,16 +78,127 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         );
       },
     );
-
     Overlay.of(context).insert(_dropdownOverlay!);
+  }
+
+  Widget _dropdownItem(BuildContext context, String title) {
+    return InkWell(
+      onTap: () {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Selected: $title')));
+        _removeDropdown();
+      },
+      hoverColor: Colors.grey.shade200,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        child: Text(
+          title,
+          style: const TextStyle(fontSize: 16, color: Colors.black),
+        ),
+      ),
+    );
+  }
+
+  Widget _abacusDropdownItem() {
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() => _isHoveringAbacus = true);
+        _showAbacusDropdown();
+      },
+      onExit: (_) {
+        setState(() => _isHoveringAbacus = false);
+        Future.delayed(const Duration(milliseconds: 300), () {
+          if (!_isHoveringAbacus) _removeAbacusDropdown();
+        });
+      },
+      child: Container(
+        color: Colors.grey.shade200,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        child: Row(
+          children: const [
+            Expanded(
+              child: Text(
+                'ABACUS (Whole Brain Development Program)',
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ),
+            Icon(Icons.arrow_right, color: Colors.black),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showAbacusDropdown() {
+    final RenderBox renderBox =
+        _dropdownKey.currentContext!.findRenderObject() as RenderBox;
+    final position = renderBox.localToGlobal(Offset.zero);
+
+    _abacusOverlay = OverlayEntry(
+      builder: (context) {
+        return Positioned(
+          left: position.dx + 330,
+          top: position.dy + 95,
+          child: MouseRegion(
+            onEnter: (_) => setState(() => _isHoveringAbacus = true),
+            onExit: (_) {
+              setState(() => _isHoveringAbacus = false);
+              Future.delayed(const Duration(milliseconds: 300), () {
+                if (!_isHoveringAbacus) _removeAbacusDropdown();
+              });
+            },
+            child: Material(
+              elevation: 4,
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _submenuItem('What is ABACUS'),
+                  _submenuItem('History of ABACUS'),
+                  _submenuItem('Team Details'),
+                  _submenuItem('FAQ'),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    Overlay.of(context).insert(_abacusOverlay!);
+  }
+
+  Widget _submenuItem(String label) {
+    return InkWell(
+      onTap: () {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Selected: $label')));
+        _removeDropdown();
+        _removeAbacusDropdown();
+      },
+      hoverColor: Colors.grey.shade300,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        child: Text(
+          label,
+          style: const TextStyle(fontSize: 15, color: Colors.black),
+        ),
+      ),
+    );
   }
 
   void _removeDropdown() {
     _dropdownOverlay?.remove();
     _dropdownOverlay = null;
-    setState(() {
-      _isHoveringCourses = false;
-    });
+    _removeAbacusDropdown();
+    setState(() => _isHoveringCourses = false);
+  }
+
+  void _removeAbacusDropdown() {
+    _abacusOverlay?.remove();
+    _abacusOverlay = null;
+    setState(() => _isHoveringAbacus = false);
   }
 
   void _callNumber(String number) async {
@@ -126,13 +233,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             ),
           ),
           const SizedBox(width: 20),
-
           _navButton(context, 'Home', const HomePage()),
           _navButton(context, 'About', const AboutUsPage()),
-
           CompositedTransformTarget(
             link: _layerLink,
             child: MouseRegion(
+              key: _dropdownKey,
               onEnter: (_) {
                 if (_dropdownOverlay == null) {
                   setState(() => _isHoveringCourses = true);
@@ -153,20 +259,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               ),
             ),
           ),
-
           _navButton(context, 'Gallery', GalleryPage()),
           _navButton(context, 'Team', TeamPage()),
           _navButton(context, 'Inquiry', InquiryForm()),
           _navButton(context, 'Contact', ContactUsPage()),
           const Spacer(),
-          Row(
-            children: [
-              IconButton(
-                tooltip: 'Call Us',
-                onPressed: () => _callNumber('+918866114453'),
-                icon: const Icon(Icons.call, color: Colors.white, size: 25),
-              ),
-            ],
+          IconButton(
+            tooltip: 'Call Us',
+            onPressed: () => _callNumber('+918866114453'),
+            icon: const Icon(Icons.call, color: Colors.white, size: 25),
           ),
           IconButton(
             tooltip: 'Facebook',
@@ -186,7 +287,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               size: 25,
             ),
           ),
-
           const SizedBox(width: 10),
           TextButton(
             onPressed:
