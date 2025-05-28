@@ -1,3 +1,4 @@
+import 'package:eduwebsite/scrrens/carrer_Screen.dart';
 import 'package:eduwebsite/scrrens/faq.dart';
 import 'package:eduwebsite/scrrens/history.dart';
 import 'package:eduwebsite/scrrens/teamdetailabacus.dart';
@@ -288,8 +289,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               },
               onExit: (_) {
                 Future.delayed(const Duration(milliseconds: 300), () {
-                  if (!_isHoveringAbacus && !_isInAbacusSubmenu)
+                  if (!_isHoveringAbacus && !_isInAbacusSubmenu) {
                     _removeDropdown();
+                  }
                 });
               },
               child: Container(
@@ -312,6 +314,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           _navButton(context, 'Team', TeamPage()),
           _navButton(context, 'Inquiry', InquiryForm()),
           _navButton(context, 'Contact', ContactUsPage()),
+          _navButton(context, 'Carrier', CareerScreen()),
           const Spacer(),
           IconButton(
             tooltip: 'Call Us',

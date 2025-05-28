@@ -40,7 +40,7 @@ class TeamPage extends StatelessWidget {
                     'Mathematics, Physics, English Grammar, Engineering Projects, Engineering Coaching',
                 email: 'dbmehta.30@gmail.com',
                 mobile: '+91-8866114453',
-                imagePath: 'assets/images/dharmik.png',
+                imagePath: 'assets/class2.jpeg',
                 education: 'B.Tech & M.Tech',
               ),
             ),
@@ -56,7 +56,7 @@ class TeamPage extends StatelessWidget {
                     'ABACUS (Whole Brain Development Program), History, Economics, English, Environment, Law, Humanities & Social Science ',
                 email: 'pooja.mehta3001@gmail.com',
                 mobile: '+91-8160549426',
-                imagePath: 'assets/images/pooja.png',
+                imagePath: 'assets/class1.jpeg',
                 education: 'B.Com, CS',
               ),
             ),
@@ -139,7 +139,7 @@ class _TeamCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(imagePath, fit: BoxFit.cover),
+          Image.asset(imagePath, height: 100, width: 200),
           const SizedBox(height: 16),
           Text(
             name,

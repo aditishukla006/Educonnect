@@ -1,3 +1,4 @@
+import 'package:eduwebsite/scrrens/inquiry_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,8 +50,9 @@ class ContactCard extends StatelessWidget {
                       shadowColor: Colors.indigoAccent,
                     ),
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Booking your visit...')),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => InquiryForm()),
                       );
                     },
                     child: Text(

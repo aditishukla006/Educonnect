@@ -39,8 +39,8 @@ class Teamdetail extends StatelessWidget {
                     // Profile Image
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        'https://via.placeholder.com/150', // Replace with actual image
+                      child: Image.asset(
+                        'assets/class1.jpeg', // Replace with actual image
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -54,7 +54,7 @@ class Teamdetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Mrs. Aditi Shukla',
+                            'Mrs. pooja Mehta',
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -68,7 +68,7 @@ class Teamdetail extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           const Text(
-                            'Aditi Shukla brings over 10 years of experience in child development and abacus education. Her vision drives the mission of holistic learning at Navkar.',
+                            'Pooja Mehta is the Centre Director for the ABACUS Whole Brain Development Program and serves as the Academic Head and Career Counsellor at Navkar Education. With over 10 years of experience, she specializes in ABACUS training along with subjects like History, Economics, English, Environment, Law, and Humanities.',
                           ),
                         ],
                       ),

@@ -1,10 +1,30 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Footer extends StatelessWidget {
   const Footer({super.key});
+
+  void _launchPhone() async {
+    final Uri phoneUri = Uri(scheme: 'tel', path: '+918866114453');
+    if (await canLaunchUrl(phoneUri)) {
+      await launchUrl(phoneUri);
+    }
+  }
+
+  void _launchEmail() async {
+    final Uri emailUri = Uri(scheme: 'mailto', path: 'dbmehta.30@gmail.com');
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(emailUri);
+    }
+  }
+
+  void _launchMap() async {
+    const url =
+        'https://www.google.com/maps/search/?api=1&query=Navkar+Education+Shahibaug+Ahmedabad';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +32,7 @@ class Footer extends StatelessWidget {
     final isSmallScreen = screenWidth < 800;
 
     return Container(
-      color: Colors.indigo.shade900, // Dark purple background
+      color: Colors.indigo.shade900,
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
       child: Center(
         child: ConstrainedBox(
@@ -35,7 +55,7 @@ class Footer extends StatelessWidget {
 
   List<Widget> _buildFooterContent(bool isSmallScreen) {
     return [
-      // Logo + Social Icons
+      // Logo
       Expanded(
         flex: isSmallScreen ? 0 : 1,
         child: Column(
@@ -71,7 +91,7 @@ class Footer extends StatelessWidget {
                   width: 140,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.black45,
                         blurRadius: 4,
@@ -81,10 +101,7 @@ class Footer extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/LOGO.jpg',
-                      fit: BoxFit.cover, // Makes it fill the box proportionally
-                    ),
+                    child: Image.asset('assets/LOGO.jpg', fit: BoxFit.cover),
                   ),
                 ),
               ],
@@ -103,8 +120,8 @@ class Footer extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
+            children: [
+              const Text(
                 'Get in touch',
                 style: TextStyle(
                   color: Colors.white,
@@ -112,53 +129,67 @@ class Footer extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 12),
-              Text(
-                'Raghukul Society, B/3/36, near Shahibaug Flyover, opp. Railway Crossing,\n Jain Colony, Shahibag, Ahmedabad, Gujarat 380004',
+              const SizedBox(height: 12),
+              const Text(
+                'Raghukul Society, B/3/36, near Shahibaug Flyover, opp. Railway Crossing,\nJain Colony, Shahibag, Ahmedabad, Gujarat 380004',
                 style: TextStyle(color: Colors.white70),
               ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(Icons.phone, color: Colors.white70, size: 18),
-                  SizedBox(width: 8),
-                  Text(
-                    '+91 88661 14453',
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ],
-              ),
-              SizedBox(height: 6),
-              Row(
-                children: [
-                  Icon(Icons.email, color: Colors.white70, size: 18),
-                  SizedBox(width: 8),
-                  Text(
-                    'dbmehta.30@gmail.com',
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(Icons.location_pin, color: Colors.white70, size: 18),
-                  SizedBox(width: 8),
-                  Text(
-                    'Book a Visit',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      decoration: TextDecoration.underline,
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: _launchPhone,
+                child: const Row(
+                  children: [
+                    Icon(Icons.phone, color: Colors.white70, size: 18),
+                    SizedBox(width: 8),
+                    Text(
+                      '+91 88661 14453',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+              const SizedBox(height: 6),
+              GestureDetector(
+                onTap: _launchEmail,
+                child: const Row(
+                  children: [
+                    Icon(Icons.email, color: Colors.white70, size: 18),
+                    SizedBox(width: 8),
+                    Text(
+                      'dbmehta.30@gmail.com',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: _launchMap,
+                child: const Row(
+                  children: [
+                    Icon(Icons.location_pin, color: Colors.white70, size: 18),
+                    SizedBox(width: 8),
+                    Text(
+                      'Book a Visit',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
 
-      // Locations
       // Office Hours
       Expanded(
         flex: isSmallScreen ? 0 : 1,
@@ -175,12 +206,12 @@ class Footer extends StatelessWidget {
             ),
             SizedBox(height: 12),
             Text(
-              'Mon - Fri: 5:30 pM - 9:00 PM',
+              'Mon - Fri: 5:30 PM - 9:00 PM',
               style: TextStyle(color: Colors.white70),
             ),
             SizedBox(height: 6),
             Text(
-              'Saturday: 6:30 pM - 9:00 PM',
+              'Saturday: 6:30 PM - 9:00 PM',
               style: TextStyle(color: Colors.white70),
             ),
             SizedBox(height: 6),

@@ -80,18 +80,6 @@ class ContactUsPage extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 40),
-                GestureDetector(
-                  onTap: _openMapLocation,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      'https://maps.google.com/maps?q=23.0487874%2C72.592228&z=17&hl=en',
-                      width: double.infinity,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
