@@ -314,7 +314,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           _navButton(context, 'Team', TeamPage()),
           _navButton(context, 'Inquiry', InquiryForm()),
           _navButton(context, 'Contact', ContactUsPage()),
-          _navButton(context, 'Carrier', CareerScreen()),
+          _navButton(context, 'Career', CareerScreen()),
           const Spacer(),
           IconButton(
             tooltip: 'Call Us',

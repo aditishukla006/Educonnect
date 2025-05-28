@@ -27,31 +27,43 @@ class CareerScreen extends StatelessWidget {
               runSpacing: 20,
               children: const [
                 JobCard(
+                  icon: Icons.science,
                   title: 'Chemistry Teacher',
                   description:
-                      'Teach 11th and 12th Science students. Strong subject knowledge and experience in handling board syllabus preferred.',
+                      'Qualification: Diploma/Graduate/Post Graduate in Chemistry\n'
+                      'Experience: 1–2 years of teaching in School/College/Coaching\n'
+                      'Job Profile: Teach Chemistry to 11-12 Science students including JEE/GUJCET. Freshers with passion can apply.',
                   experience:
-                      'Minimum 2 years of teaching experience required.',
+                      'Experience: 1–2 years (Freshers with passion can apply)',
                 ),
                 JobCard(
+                  icon: Icons.calculate,
                   title: 'Maths Teacher (11-12 Science)',
                   description:
-                      'Passionate educator needed for Higher Secondary Maths. Prior experience with Science students is a plus.',
-                  experience: 'At least 3 years of experience teaching Maths.',
+                      'Qualification: Diploma/Graduate/Post Graduate in Mathematics or Engineering\n'
+                      'Experience: 1–2 years in School/College/Coaching\n'
+                      'Job Profile: Teach Mathematics to 11-12 Science students including JEE/GUJCET. Freshers with passion can apply.',
+                  experience:
+                      'Experience: 1–2 years (Freshers with passion can apply)',
                 ),
                 JobCard(
+                  icon: Icons.bar_chart,
                   title: 'Accounts & Statistics Teacher (11-12 Commerce)',
                   description:
-                      'Expertise in Accounts and Statistics for Commerce students. Ability to simplify concepts is a must.',
+                      'Qualification: B.Com/M.Com/CA/MBA in Finance/Final Year Students\n'
+                      'Experience: 1–2 years in School/College/Coaching\n'
+                      'Job Profile: Teach Accounts & Statistics to 11-12 Commerce students. Freshers with passion can apply.',
                   experience:
-                      '2–4 years of relevant teaching experience preferred.',
+                      'Experience: 1–2 years (Freshers with passion can apply)',
                 ),
                 JobCard(
+                  icon: Icons.business_center,
                   title: 'Business Development Manager',
                   description:
-                      'Dynamic individual responsible for outreach, student admissions, partnerships, and marketing strategies.',
-                  experience:
-                      'Minimum 5 years in education sales or marketing.',
+                      'Qualification: Any Graduate/Post Graduate (Preferably BBA/MBA)\n'
+                      'Experience: 1–2 years in business development (Freshers can apply)\n'
+                      'Skills: Business acumen, strong communication, marketing, MS Office, digital marketing, social media, strategic thinking.',
+                  experience: 'Experience: 1–2 years (Freshers can also apply)',
                 ),
               ],
             ),
@@ -63,12 +75,14 @@ class CareerScreen extends StatelessWidget {
 }
 
 class JobCard extends StatelessWidget {
+  final IconData icon;
   final String title;
   final String description;
   final String experience;
 
   const JobCard({
     super.key,
+    required this.icon,
     required this.title,
     required this.description,
     required this.experience,
@@ -77,7 +91,7 @@ class JobCard extends StatelessWidget {
   Future<void> _openGoogleForm(BuildContext context) async {
     final Uri url = Uri.parse(
       'https://docs.google.com/forms/d/e/1FAIpQLScUdjED1nNRVbbBhkpNuoK9TtE3VuZ5L2iKBput5BMP4hEG8Q/viewform?usp=header',
-    ); // 🔁 Replace this
+    );
 
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -103,17 +117,25 @@ class JobCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.indigo,
-            ),
+          Row(
+            children: [
+              Icon(icon, color: Colors.indigo, size: 28),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.indigo,
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(description),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+          Text(description, style: const TextStyle(fontSize: 14)),
+          const SizedBox(height: 12),
           Text(
             experience,
             style: const TextStyle(

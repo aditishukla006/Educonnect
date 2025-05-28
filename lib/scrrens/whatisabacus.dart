@@ -38,7 +38,7 @@ class WhatIsAbacusPage extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.asset(
-                            'assets/abacus.jpg', // <-- Add your image in assets folder
+                            'assets/activity3.jpeg', // <-- Add your image in assets folder
                             width: double.infinity,
                             height: 200,
                             fit: BoxFit.cover,
