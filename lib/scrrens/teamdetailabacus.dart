@@ -40,7 +40,7 @@ class Teamdetail extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        'assets/class1.jpeg', // Replace with actual image
+                        'assets/team2.jpeg', // Replace with actual image
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,

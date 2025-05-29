@@ -60,9 +60,9 @@ class CareerScreen extends StatelessWidget {
                   icon: Icons.business_center,
                   title: 'Business Development Manager',
                   description:
-                      'Qualification: Any Graduate/Post Graduate (Preferably BBA/MBA)\n'
+                      'Qualification: Any Graduate/Post Graduate (Preferably BBA/MBA),Final Year Students\n'
                       'Experience: 1–2 years in business development (Freshers can apply)\n'
-                      'Skills: Business acumen, strong communication, marketing, MS Office, digital marketing, social media, strategic thinking.',
+                      'Skills: Business acumen, strong communication, marketing, MS Office, digital marketing, social media, strategic thinking,educational marketing',
                   experience: 'Experience: 1–2 years (Freshers can also apply)',
                 ),
               ],
