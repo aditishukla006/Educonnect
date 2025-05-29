@@ -1,5 +1,7 @@
 import 'package:eduwebsite/base_layout.dart';
+import 'package:eduwebsite/scrrens/contact_screen.dart';
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:animate_do/animate_do.dart';
 
@@ -22,7 +24,11 @@ class _HistoryOfAbacusPageState extends State<HistoryOfAbacusPage> {
             // 🔹 Top Image Banner
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset('assets/images/abacus_banner.jpg'),
+              child: Image.asset(
+                'assets/activity3.jpeg',
+                height: 200,
+                width: 200,
+              ),
             ),
             const SizedBox(height: 24),
 
@@ -65,14 +71,39 @@ class _HistoryOfAbacusPageState extends State<HistoryOfAbacusPage> {
             // 🔹 Contact Us Section
             FadeIn(
               duration: const Duration(milliseconds: 1300),
-              child: Text(
-                'Contact Us',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.indigo.shade700,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    // Example: Navigate to ContactPage (create it if needed)
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ContactUsPage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  icon: const Icon(Icons.contact_mail),
+                  label: const Text(
+                    'Contact Us',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
               ),
             ),
+            const SizedBox(height: 20),
+
             const SizedBox(height: 10),
 
             FadeIn(
@@ -94,68 +125,6 @@ class _HistoryOfAbacusPageState extends State<HistoryOfAbacusPage> {
 
             const Divider(thickness: 2),
             const SizedBox(height: 20),
-
-            // 🔹 CTA Section
-            FadeIn(
-              duration: const Duration(milliseconds: 1500),
-              child: Text(
-                'Navkar Education',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.indigo,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            FadeIn(
-              duration: const Duration(milliseconds: 1600),
-              child: const Text(
-                'Join Navkar Education for expert Abacus training, where young minds grow through fun, focus, and calculation mastery. '
-                'Our experienced faculty and child-centric methods ensure every student gets a strong foundation in mental math and holistic development.',
-                style: TextStyle(fontSize: 16, height: 1.5),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            ScaleAnimatedWidget.tween(
-              duration: const Duration(milliseconds: 800),
-              scaleDisabled: 1.0,
-              scaleEnabled: 1.05,
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.indigo.shade50,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.indigo.shade100),
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.school, size: 48, color: Colors.indigo.shade700),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Enroll Today!',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'Give your child the gift of speed, accuracy, and confidence in math with Navkar’s Abacus program.',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
           ],
         ),
       ),
