@@ -94,6 +94,7 @@ flutter:
     - assets/activity8.jpeg
     - assets/activity9.jpeg
     - assets/activity10.jpeg
+    - assets/team1.jpeg
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

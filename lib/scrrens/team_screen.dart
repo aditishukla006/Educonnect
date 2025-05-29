@@ -40,7 +40,7 @@ class TeamPage extends StatelessWidget {
                     'Mathematics, Physics, English Grammar, Engineering Projects, Engineering Coaching',
                 email: 'dbmehta.30@gmail.com',
                 mobile: '+91-8866114453',
-                imagePath: 'assets/class2.jpeg',
+                imagePath: 'assets/team1.jpeg',
                 education: 'B.Tech & M.Tech',
               ),
             ),
